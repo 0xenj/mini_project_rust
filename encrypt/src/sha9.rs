@@ -1,9 +1,11 @@
-pub fn sha9(line: &String) -> String {
+pub fn sha9(line: &str, encrypt: bool) -> String {
     let mut converted = String::new();
+    let mut shift = if encrypt { 9 } else { -9 };
   
     for letter in line.chars() {
       if letter.is_alphabetic() {
-        converted.push(get_char_code(letter));
+        converted.push(shift_char(letter, shift));
+        shift = update_shift(shift, encrypt);
       } else {
         converted.push(letter);
       }
@@ -12,68 +14,36 @@ pub fn sha9(line: &String) -> String {
     converted
   }
 
-  fn get_char_code(letter: char) -> char {
-    match letter {
-      'A' => 'J',
-      'B' => 'K',
-      'C' => 'L',
-      'D' => 'M',
-      'E' => 'N',
-      'F' => 'O',
-      'G' => 'P',
-      'H' => 'Q',
-      'I' => 'R',
-      'J' => 'S',
-      'K' => 'T',
-      'L' => 'U',
-      'M' => 'V',
-      'N' => 'W',
-      'O' => 'X',
-      'P' => 'Y',
-      'Q' => 'Z',
-      'R' => 'A',
-      'S' => 'B',
-      'T' => 'C',
-      'U' => 'D',
-      'V' => 'E',
-      'W' => 'F',
-      'X' => 'G',
-      'Y' => 'H',
-      'Z' => 'I',
-      'a' => 'j',
-      'b' => 'k',
-      'c' => 'l',
-      'd' => 'm',
-      'e' => 'n',
-      'f' => 'o',
-      'g' => 'p',
-      'h' => 'q',
-      'i' => 'r',
-      'j' => 's',
-      'k' => 't',
-      'l' => 'u',
-      'm' => 'v',
-      'n' => 'w',
-      'o' => 'x',
-      'p' => 'y',
-      'q' => 'z',
-      'r' => 'a',
-      's' => 'b',
-      't' => 'c',
-      'u' => 'd',
-      'v' => 'e',
-      'w' => 'f',
-      'x' => 'g',
-      'y' => 'h',
-      'z' => 'i',
-      _ => ' '
+  fn shift_char(letter: char, shift: i32) -> char {
+    let (start, end) = if letter.is_uppercase() { ('A', 'Z') } else { ('a', 'z') };
+    let first_ascii = start as i32;
+    let last_ascii = end as i32;
+    let alphabet_length = 26;
+
+    let mut shifted_ascii = (letter as i32) + shift;
+
+    while shifted_ascii > last_ascii {
+      shifted_ascii -= alphabet_length;
     }
+    while shifted_ascii < first_ascii {
+      shifted_ascii += alphabet_length;
+    }
+
+    std::char::from_u32(shifted_ascii as u32).unwrap_or(letter)
   }
+
+  fn update_shift(shift: i32, encrypt: bool) -> i32 {
+    let mut new_shift = shift + if encrypt { -1 } else { 1 };
+    if new_shift == 2 || new_shift == -2 {
+        new_shift += if encrypt { 9 } else { -9 };
+    }
+    new_shift
+}
   
   #[test]
   fn it_converts() {
-    let input = "Hello World!".to_string();
-    let converted = "Qnuux Sknhz!".to_string();
-    assert!(sha9(&input) == "Qnuux Sknhz!");
-    assert!(sha9(&converted) == "Hello World!");
+    let input = "Hello World".to_string();
+    let converted = "Qmsrt Arcvm".to_string();
+    assert!(sha9(&input, true) == "Qmsrt Arcvm");
+    assert!(sha9(&converted, false) == "Hello World");
   }
