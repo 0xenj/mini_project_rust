@@ -1,6 +1,6 @@
-mod sha9;
+mod sha912;
 
-use sha9::sha9;
+use sha912::sha912;
 use std::fs::File;
 use std::io::{ Read, Write };
 use std::env;
@@ -21,7 +21,7 @@ fn main() {
             let mut content = String::new();
             file.read_to_string(&mut content).unwrap();
 
-            let converted = sha9(&content, mode);
+            let converted = sha912(&content, mode);
 
             match File::create(filename) {
                 Err(e) => panic!("Couldn't create {}: {}", filename, e),
