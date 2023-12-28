@@ -1,12 +1,12 @@
-# SHA9 Encryption Tool
+# SHA912 Encryption Tool
 
 ## Description
 
-This Rust program is designed to encrypt or decrypt text files using a custom encryption algorithm named **SHA9**. It employs a letter-shifting method in the alphabet with a variable shifting logic to transform the file's content.
+This Rust program is designed to encrypt or decrypt text files using a custom encryption algorithm named **SHA912**. It employs a letter-shifting method in the alphabet with a variable shifting logic to transform the file's content.
 
 ## Features
 
-- **Encryption**: Encrypts the content of a text file using the **SHA9** algorithm.
+- **Encryption**: Encrypts the content of a text file using the **SHA912** algorithm.
 - **Decryption**: Decrypts a text file previously encrypted by this program.
 
 ## Installation
