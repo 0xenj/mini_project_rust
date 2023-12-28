@@ -16,8 +16,8 @@ Ensure you have Rust and Cargo installed on your system. You can download and in
 Then clone this repository using Git and navigate to the cloned project directory:
 
 ```
-git clone [REPOSITORY_URL]
-cd [DIRECTORY_NAME]
+git clone https://github.com/0xenj/mini_project_rust.git
+cd ./encrypt
 ```
 
 ## Usage
@@ -43,6 +43,6 @@ To **decrypt** the same file:
 
 ## Important Notes
 
-Using this program will replace the content of the original file. Ensure to back up important data before proceeding with encryption or decryption.
-This tool is intended for educational and experimental purposes and should not be used for the security of critical information.
+- Using this program will replace the content of the original file. Ensure to back up important data before proceeding with encryption or decryption.
+- This tool is intended for educational and experimental purposes and should not be used for the security of critical information.
 
